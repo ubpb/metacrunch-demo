@@ -27,18 +27,14 @@ module Metacrunch
       def process_files(files)
         file_reader = Metacrunch::Utils::FileReader.new
         file_reader.read_files(files) do |file_result|
-          xml      = file_result.contents
-          document = Metacrunch::Mab2::Document.from_aleph_mab_xml(xml)
+          xml = file_result.contents
+          mab = Metacrunch::Mab2::Document.from_aleph_mab_xml(xml)
 
-          names = document.data_fields("100").filter(ind1: "-").map do |data_field|
-            data_field.sub_fields("p").try(:first).try(:value)
-          end
-
-          # Alternative API with direct access to the values
-          names = document.values(data_field: "100", ind1: "-", sub_field: "p")
+          names  = mab.values(data_field: "100", ind1: "-", sub_field: "p")
+          names += mab.values(data_field: "104", ind1: "a", sub_field: "p")
 
           puts "Authors for #{file_result.filename}"
-          puts "  #{names.join(' ; ')}"
+          puts "  #{names.join('; ')}"
         end
       end
 
