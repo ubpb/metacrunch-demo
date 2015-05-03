@@ -1,11 +1,11 @@
 require File.expand_path("../lib/metacrunch/demo/version", __FILE__)
 
 Gem::Specification.new do |s|
-  s.authors       = ["René Sprotte", "Michael Sievers"]
+  s.authors       = ["René Sprotte", "Michael Sievers"]
   s.email         = "r.sprotte@ub.uni-paderborn.de"
   s.summary       = %q{Demo plugin for the metacrunch toolkit for Ruby}
   s.description   = s.summary
-  s.homepage      = "http://github.com/ubpb/metacrunch-foo"
+  s.homepage      = "http://github.com/ubpb/metacrunch-demo"
   s.licenses      = ["MIT"]
 
   s.files         = `git ls-files`.split($\)

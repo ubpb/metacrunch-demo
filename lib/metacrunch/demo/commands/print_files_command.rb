@@ -2,23 +2,12 @@ module Metacrunch
   module Demo
     class PrintFilesCommand < Metacrunch::Command
 
-      #
-      # One can override setup to make some setup before
-      # call is run.
-      #
-      def setup
-        # Your setup here...
-      end
-
-      #
-      # Print out files
-      #
-      def call(files:)
-        if files.empty?
+      def perform
+        if params.empty?
           shell.say "No files found", :red
         else
-          shell.say "Printing #{files.count} file(s)...", :green
-          print_files(files)
+          shell.say "Printing #{params.count} file(s)...", :green
+          print_files(params)
         end
       end
 

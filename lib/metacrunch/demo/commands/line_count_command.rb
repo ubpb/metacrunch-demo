@@ -5,19 +5,19 @@ module Metacrunch
       #
       # Do some setup
       #
-      def setup
+      def pre_perform
         @no_of_procs = options[:no_of_procs] > 0 ? options[:no_of_procs] : 1
       end
 
       #
       # Count lines
       #
-      def call(files:)
-        if files.empty?
+      def perform
+        if params.empty?
           shell.say "No files found", :red
         else
-          shell.say "Counting #{files.count} file(s) using #{@no_of_procs} prozesses...", :green
-          lines = count_lines(files)
+          shell.say "Counting #{params.count} file(s) using #{@no_of_procs} prozesses...", :green
+          lines = count_lines(params)
           shell.say "No of lines: #{lines}"
         end
       end
