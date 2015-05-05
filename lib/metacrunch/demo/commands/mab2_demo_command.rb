@@ -19,8 +19,8 @@ module Metacrunch
           xml = file_result.contents
           mab = Metacrunch::Mab2::Document.from_aleph_mab_xml(xml)
 
-          names  = mab.values(data_field: "100", ind1: "-", sub_field: "p")
-          names += mab.values(data_field: "104", ind1: "a", sub_field: "p")
+          names  = mab.datafields("100", ind1: "-").subfields("p").values
+          names += mab.datafields("104", ind1: "a").subfields("p").values
 
           puts "Authors for #{file_result.filename}"
           puts "  #{names.join('; ')}"
