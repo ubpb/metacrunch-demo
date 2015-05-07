@@ -17,13 +17,18 @@ module Metacrunch
         file_reader = Metacrunch::Utils::FileReader.new
         file_reader.read_files(files) do |file_result|
           xml = file_result.contents
+
           mab = Metacrunch::Mab2::Document.from_aleph_mab_xml(xml)
+          snr = Metacrunch::SNR.new
 
-          names  = mab.datafields("100", ind1: "-").subfields("p").values
-          names += mab.datafields("104", ind1: "a").subfields("p").values
+          transformer = Transformer.new(source: mab, target: snr, options: {})
+          transformer.transform do
+            names  = source.datafields("100", ind1: "-").subfields("p").values
+            names += source.datafields("104", ind1: "a").subfields("p").values
+            target.add("search", "authors", names)
+          end
 
-          puts "Authors for #{file_result.filename}"
-          puts "  #{names.join('; ')}"
+          puts snr.to_xml
         end
       end
 
