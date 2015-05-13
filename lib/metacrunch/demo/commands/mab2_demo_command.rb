@@ -14,8 +14,8 @@ module Metacrunch
     private
 
       def process_files(files)
-        file_reader = Metacrunch::Utils::FileReader.new
-        file_reader.read_files(files) do |file_result|
+        file_reader = Metacrunch::Readers::FileReader.new(files)
+        file_reader.each do |file_result|
           xml = file_result.contents
 
           mab = Metacrunch::Mab2::Document.from_aleph_mab_xml(xml)

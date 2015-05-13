@@ -29,10 +29,12 @@ module Metacrunch
       #
       def count_lines(files)
         counts = Parallel.map(files, in_processes: @no_of_procs) do |filename|
-          file_reader = Metacrunch::Utils::FileReader.new
-          file_reader.read_file(filename) do |result|
-            result.contents.count("\n")
+          file_reader = Metacrunch::Readers::FileReader.new(filename)
+          c = 0
+          file_reader.each do |result|
+            c += result.contents.count("\n")
           end
+          c
         end
 
         counts.inject{ |sum, x| sum + x }

@@ -14,8 +14,8 @@ module Metacrunch
     private
 
       def print_files(files)
-        file_reader = Metacrunch::Utils::FileReader.new
-        file_reader.read_files(files) do |file_result|
+        file_reader = Metacrunch::Readers::FileReader.new(files)
+        file_reader.each do |file_result|
           if file_result.from_archive?
             puts "#{file_result.filename} @ #{File.expand_path(file_result.source_filename)}"
           else
