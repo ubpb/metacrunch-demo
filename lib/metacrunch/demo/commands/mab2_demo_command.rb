@@ -14,7 +14,7 @@ module Metacrunch
     private
 
       def process_files(files)
-        file_reader = Metacrunch::Readers::FileReader.new(files)
+        file_reader = Metacrunch::FileReader.new(files)
         file_reader.each do |file_result|
           xml = file_result.contents
 
