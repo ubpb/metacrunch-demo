@@ -25,10 +25,10 @@ module Metacrunch
     private
 
       #
-      # Count lines with a parallel MapReduce
+      # Count lines with a parallel MapReduce using the Parallel Gem.
       #
       def count_lines(files)
-        counts = Parallel.map(files, in_processes: @no_of_procs) do |filename|
+        counts = ::Parallel.map(files, in_processes: @no_of_procs) do |filename|
           file_reader = Metacrunch::FileReader.new(filename)
           c = 0
           file_reader.each do |result|
@@ -37,7 +37,7 @@ module Metacrunch
           c
         end
 
-        counts.inject{ |sum, x| sum + x }
+        counts.sum
       end
 
     end
