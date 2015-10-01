@@ -23,8 +23,9 @@ module Metacrunch
 
           transformer = Transformer.new(source: mab, target: snr, options: {})
           transformer.transform do
-            names  = source.datafields("100", ind1: "-").subfields("p").values
+            names  = source.datafields("100", ind1: :blank).subfields("p").values
             names += source.datafields("104", ind1: "a").subfields("p").values
+
             target.add("search", "authors", names)
           end
 

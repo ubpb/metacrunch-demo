@@ -33,7 +33,7 @@ Metacrunch::Cli.setup("demo", "A collection of demo commands") do |r|
       required: true
   end
 
-  # A more complex command that prints filenames
+  # A more complex command that extract data from MAB2 files.
   r.register(Metacrunch::Demo::Mab2DemoCommand) do |c|
     c.usage "mab2_demo FILES..."
     c.desc "Demo processing for Aleph MAB XML files"
