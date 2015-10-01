@@ -22,6 +22,15 @@ module Metacrunch
           snr = Metacrunch::SNR.new
 
           transformer = Transformer.new(source: mab, target: snr, options: {})
+
+          # Extract title
+          transformer.transform do
+            title = source.datafields("331", ind1: :blank).subfields("a").first_value
+
+            target.add("search", "title", title)
+          end
+
+          # Extract author
           transformer.transform do
             names  = source.datafields("100", ind1: :blank).subfields("p").values
             names += source.datafields("104", ind1: "a").subfields("p").values
