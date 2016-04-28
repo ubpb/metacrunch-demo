@@ -1,13 +1,3 @@
-# Metacrunch comes with a build in database reader based on the Sequel gem.
-# For more information about Sequel: https://github.com/jeremyevans/sequel
-# Sequel support many databases. For this example we will use SQLite3.
-# So lets declare the dependency to sqlite3.
-dependencies do
-  gem "sqlite3", ">= 1.3.11"
-end
-
-#require "sqlite3"
-
 # To connect to the database Sequel support common connection URLs.
 # Here we define a option that allows us to overwrite the connection
 # URL default (sqlite://THIS_DIR/dummy.sqlite) from the command line.

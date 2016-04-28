@@ -1,0 +1,6 @@
+# To declare dependencies use Bundler (http://bundler.io)
+# In this example we use the colorize gem to color
+# the output of the "puts" call. Take a look at the
+# Gemfile.
+
+puts "Now we can output colorful text. Yeah.".colorize(:green)
