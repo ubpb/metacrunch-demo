@@ -1,0 +1,41 @@
+# To connect to the database Sequel supports common connection URLs.
+# Here we define an option that allows us to overwrite the connection
+# URL default (sqlite://THIS_DIR/dummy.sqlite) from the command line.
+options do
+  add :database_url, "-d", "--database URL", "Database connection URL", default: "sqlite://#{File.expand_path(__dir__)}/../assets/dummy.sqlite"
+end
+
+# For this example the destination database is an in-memory database.
+dest_db = Sequel.sqlite
+
+# Make sure the destination database table exists
+dest_db.create_table(:users_with_a) do
+  primary_key :id
+  String :name
+end
+
+# The provided dummy.sqlite database has one table (users) with one column (name) and holds 100
+# dummy user records. To read from a database create the build in database reader with a
+# connection URL and a Sequel dataset.
+source Metacrunch::Db::Reader.new(options[:database_url], ->(db) {
+  db[:users].order(:id)
+})
+
+# For every row that matches the SQL query the transformation is called.
+transformation ->(row) do
+  # For this example, we select the rows where the user name starts with "A".
+  # Only these rows are passed to the next transformation.
+  row if row[:name].starts_with?("A")
+end
+
+# Called for every row where the user name starts with "A".
+transformation ->(row) do
+  puts row[:name]
+  row # make sure to return the row so that the destination writer can see it
+end
+
+# Each user with a name starting with 'A' gets written into the destination
+# database table 'users_with_a'.
+destination Metacrunch::Db::Writer.new(dest_db, ->(db) {
+  db[:users_with_a]
+})
