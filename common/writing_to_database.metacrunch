@@ -31,7 +31,10 @@ end
 # Called for every row where the user name starts with "A".
 transformation ->(row) do
   puts row[:name]
-  row # make sure to return the row so that the destination writer can see it
+
+  # Prepare the data for the db writer (actually not needed in this case because
+  # 'row' is already a hash that fits the requirements)
+  {id: row[:id], name: row[:name]}
 end
 
 # Each user with a name starting with 'A' gets written into the destination
