@@ -7,8 +7,10 @@ end
 
 # The provided dummy.sqlite database has one table (users) with one column (name) and holds 100
 # dummy user records. To read from a database instatiate the build in database reader with a
-# connection URL and the SQL select statement you like.
-source Metacrunch::Db::Reader.new(options[:database_url], "select * from users")
+# connection URL and a Sequel dataset.
+source Metacrunch::Db::Reader.new(options[:database_url], ->(db) {
+  db[:users].order(:id)
+})
 
 # For every row that matches the SQL query the transformation is called.
 transformation ->(row) do
