@@ -1,12 +1,12 @@
-# To connect to the database Sequel support common connection URLs.
-# Here we define a option that allows us to overwrite the connection
+# To connect to the database Sequel supports common connection URLs.
+# Here we define an option that allows us to overwrite the connection
 # URL default (sqlite://THIS_DIR/dummy.sqlite) from the command line.
 options do
   add :database_url, "-d", "--database URL", "Database connection URL", default: "sqlite://#{File.expand_path(__dir__)}/../assets/dummy.sqlite"
 end
 
 # The provided dummy.sqlite database has one table (users) with one column (name) and holds 100
-# dummy user records. To read from a database instatiate the build in database reader with a
+# dummy user records. To read from a database create the build in database reader with a
 # connection URL and a Sequel dataset.
 source Metacrunch::Db::Reader.new(options[:database_url], ->(db) {
   db[:users].order(:id)
