@@ -6,5 +6,5 @@ To run the examples clone this repo, install metacrunch and use the metacrunch r
 E.g.
 
 ```
-$ metacrunch run ./ruby/simple_job.metacrunch
+$ metacrunch run ./common/simple_job.metacrunch
 ```
