@@ -6,5 +6,8 @@ To run the examples clone this repo, install metacrunch and use the metacrunch r
 E.g.
 
 ```
-$ metacrunch run ./common/simple_job.metacrunch
+$ git clone https://github.com/ubpb/metacrunch-demo.git
+$ cd metacrunch-demo/common
+$ bundle install
+$ bundle exec metacrunch run ./common/simple_job.metacrunch
 ```
