@@ -1,6 +1,17 @@
-# To declare dependencies use Bundler (http://bundler.io)
-# In this example we use the colorize gem to color
-# the output of the "puts" call. Take a look at the
-# Gemfile.
+# To use external dependencies for your jobs just require them.
+# You can also use Bundler (http://bundler.io) and a Gemfile.
+# When using Bundler make sure to add `gem "metacrunch"` to the Gemfile.
+#
+# To make sure that the Gemfile will be loaded when running metacrunch
+# change into the directory where your Gemfile is located or set
+# BUNDLE_GEMFILE environment variable.
+#
+# Depending on your environment it may be required to use `bundle exec`
+# when running metacrunch.
+#
+# In this example we use the colorize gem to color the output of
+# the "puts" call. Take a look at the Gemfile.
+
+require "colorize"
 
 puts "Now we can output colorful text. Yeah.".colorize(:green)
