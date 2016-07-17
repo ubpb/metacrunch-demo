@@ -1,3 +1,6 @@
+# Require dependencies from Gemfile
+Bundler.require
+
 # To connect to the database Sequel supports common connection URLs.
 # Here we define an option that allows us to overwrite the connection
 # URL default (sqlite://THIS_DIR/dummy.sqlite) from the command line.

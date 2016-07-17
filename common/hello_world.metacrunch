@@ -1,1 +1,4 @@
+# Require dependencies from Gemfile
+Bundler.require
+
 puts "Hello World"

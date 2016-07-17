@@ -1,3 +1,6 @@
+# Require dependencies from Gemfile
+Bundler.require
+
 unless args.present?
   puts "Please provide at least one file".colorize(:red)
   exit(1)

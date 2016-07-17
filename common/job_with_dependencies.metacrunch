@@ -1,3 +1,6 @@
+# Require dependencies from Gemfile
+Bundler.require
+
 # To use external dependencies for your jobs just require them.
 # You can also use Bundler (http://bundler.io) and a Gemfile.
 # When using Bundler make sure to add `gem "metacrunch"` to the Gemfile.
