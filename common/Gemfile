@@ -1,6 +1,12 @@
 source "https://rubygems.org"
 
-# Declare your default dependencies that you're using in your jobs
-gem "metacrunch", ">= 3.0.0"
+gem "metacrunch", ">= 3.0.0", github: "ubpb/metacrunch", branch: "master"
+
 gem "colorize", ">= 0.7"
 gem "sqlite3", ">= 1.3.11"
+gem "faker", ">= 1.6.5"
+
+gem "pry-byebug", ">= 3.3.0"
+gem "pry-rescue", ">= 1.4.2"
+gem "pry-state",  ">= 0.1.7"
+
