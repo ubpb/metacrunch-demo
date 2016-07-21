@@ -1,0 +1,10 @@
+# Require Gemfile depenedencies
+Bundler.require
+
+# Set user list as source
+source Metacrunch::Redis::QueueReader.new("redis://localhost:6379/metacrunch-demo", "users", blocking: true)
+
+# Log user
+transformation do |user|
+  p user
+end

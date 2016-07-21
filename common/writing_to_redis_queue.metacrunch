@@ -1,0 +1,22 @@
+# Require Gemfile depenedencies
+Bundler.require
+
+# Create 1000 dummy users with name and email
+users = 1000.times.map do |i|
+  {
+    name: Faker::Name.name,
+    email: Faker::Internet.email
+  }
+end
+
+# Set user list as source
+source users
+
+# Log user
+transformation do |user|
+  p user
+  user
+end
+
+# Write user into redis queue
+destination Metacrunch::Redis::QueueWriter.new("redis://localhost:6379/metacrunch-demo", "users")
