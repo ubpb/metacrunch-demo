@@ -13,5 +13,5 @@ Usage
 $ git clone https://github.com/ubpb/metacrunch-demo.git
 $ cd metacrunch-demo/examples
 $ bundle install
-$ bundle exec metacrunch simple_job.metacrunch
+$ bundle exec metacrunch 02_simple_job.metacrunch
 ```
