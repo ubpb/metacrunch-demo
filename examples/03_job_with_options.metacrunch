@@ -4,25 +4,38 @@ Bundler.require
 # Include some helpers (dummy utils) to play with
 require "metacrunch/test_utils"
 
-# Let's define some options (configurable variables), we
-# would like to use. You can use the command line to override
-# the defaults. E.g. metacrunch run THIS_FILE @@ -c 20
+# Let's define some options, we would like to use. You can
+# use the command line to set/override the values.
+#
+# Example:
+#   `bundle exec metacrunch 03_job_with_options.metacrunch -c 20`
+#
 # To get a list of all available options on the command line
-# use --help. E.g metacrunch run THIS_FILE @@ --help
-# The @@ seperates the job options from the options available
-# to the metacrunch command. Therefore it is important to define
-# the job options after the @@ seperator.
+# use --help.
+#
+# Example:
+#   `bundle exec metacrunch 03_job_with_options.metacrunch --help`
+#
 options do
   # Note: Args are OptionParser compatible. To learn about
   # OptionParser look here: http://ruby-doc.org/stdlib/libdoc/optparse/rdoc/OptionParser.html
+
+  # An option wth a default
   add :count_until, "-c", "--count NUMBER", "Count until NUMBER", Integer, default: 15
+  # A required option
   add :required_option, "-f", "--foo STRING", "Set Foo", String, required: true
+  # A boolean (switch) option
+  add :verbose, "-x", "Enable verbose mode"
 end
 
 # Note: Options get evaluated and instantiated during parsing phase.
 # This way they can be referenced right after the options
 # block.
 puts "Options: #{options}"
+
+# Non option arguments are available via ARGV. To require non option arguments
+# set `options(require_args: true) { ... }`
+puts "ARGV: #{ARGV}"
 
 # The DummySource emits hash objects of the following form: {number: x}
 # x counts from 1 to `options[:count_until]` by default.
@@ -32,6 +45,6 @@ source Metacrunch::TestUtils::DummySource.new(count_until: options[:count_until]
 # row contains the object that has been read from the source.
 transformation ->(row) do
   # row: {number: x}
-  puts "transformation called: #{row}"
+  puts "transformation 1 called: #{row}"
 end
 

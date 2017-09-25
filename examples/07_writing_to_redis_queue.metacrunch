@@ -1,0 +1,30 @@
+# Require Gemfile depenedencies
+Bundler.require
+
+# Create 100 dummy users with name and email, to have some data to play with.
+users = 100.times.map do |i|
+  {
+    name: Faker::Name.name,
+    email: Faker::Internet.email
+  }
+end
+
+# Connect to redis
+redis = ::Redis.new(url: "redis://localhost:6379/metacrunch-demo")
+# For a clean start delete the 'users' list
+redis.del("users")
+
+# Set user list as source
+source users
+
+# Prepare the user to be stored. Redis only stores strings as values.
+# If you want to store an object, you can use a serialization mechanism such as JSON
+transformation ->(user) do
+  puts "Writing user '#{user[:name]}' to redis."
+
+  # Return json for the destination
+  user.to_json
+end
+
+# Write user into redis queue
+destination Metacrunch::Redis::QueueDestination.new(redis, "users")

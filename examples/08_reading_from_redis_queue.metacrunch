@@ -1,0 +1,12 @@
+# Require Gemfile depenedencies
+Bundler.require
+
+# Set users list as source
+source Metacrunch::Redis::QueueSource.new("redis://localhost:6379/metacrunch-demo", "users", blocking: true)
+
+# We have stored the user as a serilized json object. So we need to parse
+# the object back.
+transformation ->(user) do
+  user = JSON.parse(user)
+  puts "Reading user '#{user["name"]}' from redis."
+end

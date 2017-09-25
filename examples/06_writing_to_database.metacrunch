@@ -1,28 +1,32 @@
 # Require dependencies from Gemfile
 Bundler.require
 
-# To connect to the database Sequel supports common connection URLs.
+# To connect to the database Sequel supports connection URLs.
 # Here we define an option that allows us to overwrite the connection
 # URL default (sqlite://THIS_DIR/dummy.sqlite) from the command line.
 options do
-  add :database_url, "-d", "--database URL", "Database connection URL", default: "sqlite://#{File.expand_path(__dir__)}/../assets/dummy.sqlite"
+  add :database_url, "-d", "--database URL", "Database connection URL", default: "sqlite://#{::File.expand_path(__dir__)}/../assets/dummy.sqlite"
 end
 
 # For this example the destination database is an in-memory database.
-dest_db = Sequel.sqlite
+DEST_DB = Sequel.sqlite
 
 # Make sure the destination database table exists
-dest_db.create_table(:users_with_a) do
+DEST_DB.create_table(:users_with_a) do
   primary_key :id
   String :name
 end
 
-# The provided dummy.sqlite database has one table (users) with one column (name) and holds 100
-# dummy user records. To read from a database create the build in database reader with a
-# connection URL and a Sequel dataset.
-source Metacrunch::Db::Reader.new(options[:database_url], ->(db) {
-  db[:users].order(:id)
-})
+# Now create a database connection object with Sequel (Sequel is a dependency of the metacrunch-db package)
+SOURCE_DB = Sequel.connect(options[:database_url])
+
+# Now create the dataset we like to use. The provided dummy.sqlite database has one table (users)
+# with one column (name) and holds 100 dummy user records. To use the source, it is required to
+# use a dataset with an unambiguous order.
+users = SOURCE_DB[:users].order(:id)
+
+# To read from a database create the build in database source with a Sequel dataset.
+source Metacrunch::DB::Source.new(users)
 
 # For every row that matches the SQL query the transformation is called.
 transformation ->(row) do
@@ -42,6 +46,4 @@ end
 
 # Each user with a name starting with 'A' gets written into the destination
 # database table 'users_with_a'.
-destination Metacrunch::Db::Writer.new(dest_db, ->(db) {
-  db[:users_with_a]
-})
+destination Metacrunch::DB::Destination.new(DEST_DB[:users_with_a])
