@@ -1,0 +1,43 @@
+# Require Gemfile depenedencies
+Bundler.require
+
+# Create some dummy data to play with
+users = 100.times.map do |i|
+  {
+    id: i,
+    name: Faker::Name.name,
+    email: Faker::Internet.email
+  }
+end
+
+# Create an Elasticsearch client instance. Make sure you have a
+# elasticsearch running at localhost:9200
+elasticsearch = ::Elasticsearch::Client.new(log: true)
+
+# For a clean start delete the 'users' index
+if elasticsearch.indices.exists?(index: "metacrunch-elasticsearch-demo")
+  elasticsearch.indices.delete(index: "metacrunch-elasticsearch-demo")
+end
+
+# Set user list as source
+source users
+
+# Prepare the data so it can be loaded into elasticsearch.
+transformation ->(user) do
+  {
+    index: {
+      _index: "metacrunch-elasticsearch-demo",
+      _type: "users",
+      _id: user.delete(:id),
+      data: user
+    }
+  }
+end
+
+# Buffer
+transformation ->(users) do
+  users
+end, buffer_size: 10
+
+# Write user into elasticsearch
+destination Metacrunch::Elasticsearch::Destination.new(elasticsearch)
