@@ -6,17 +6,26 @@ Bundler.require
 elasticsearch = ::Elasticsearch::Client.new(log: true)
 
 # Set user list as source
-source Metacrunch::Elasticsearch::Source.new(elasticsearch, {
-  index: "metacrunch-elasticsearch-demo",
-  type: "users",
-  body: {
-    query: {
-      wildcard: {
-        name: "a*"
+source Metacrunch::Elasticsearch::Source.new(
+  elasticsearch,
+
+  search_options: {
+    index: "metacrunch-elasticsearch-demo",
+    type: "users",
+    size: 2,
+    body: {
+      query: {
+        wildcard: {
+          name: "a*"
+        }
       }
     }
+  },
+
+  total_hits_callback: ->(total_hits) {
+    puts "Total hits: #{total_hits}"
   }
-})
+)
 
 transformation ->(hit) do
   user = hit["_source"]
