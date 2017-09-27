@@ -4,7 +4,7 @@ gem "metacrunch",               "~> 4.0"
 gem "metacrunch-file",          "~> 1.0"
 gem "metacrunch-db",            "~> 1.0"
 gem "metacrunch-redis",         "~> 1.0"
-gem "metacrunch-elasticsearch", "~> 4.0.pre1", github: "ubpb/metacrunch-elasticsearch", branch: "master"
+gem "metacrunch-elasticsearch", "~> 4.0"
 
 gem "sqlite3", ">= 1.3.11"
 gem "faker", ">= 1.8.4"
