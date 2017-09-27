@@ -5,7 +5,7 @@ Bundler.require
 # elasticsearch running at localhost:9200
 elasticsearch = ::Elasticsearch::Client.new(log: true)
 
-# Set user list as source
+# Let's query elasticsearch with a `Metacrunch::Elasticsearch::Source`.
 source Metacrunch::Elasticsearch::Source.new(
   # Set the elasticsearch client instance
   elasticsearch,
