@@ -14,15 +14,20 @@ end
 # elasticsearch running at localhost:9200
 elasticsearch = ::Elasticsearch::Client.new(log: true)
 
-# For a clean start delete the 'users' index
+# For a clean start delete the 'metacrunch-elasticsearch-demo' index
 if elasticsearch.indices.exists?(index: "metacrunch-elasticsearch-demo")
   elasticsearch.indices.delete(index: "metacrunch-elasticsearch-demo")
 end
 
-# Set user list as source
+# Set dummy users list as source
 source users
 
-# Prepare the data so it can be loaded into elasticsearch.
+# `Metacrunch::Elasticsearch::Destination`uses the elasticsearch bulk api internally
+# to index, update or delete records. In order to make it work you need to transform
+# your data into a format as described here that goes into the body parameter of the
+# bulk api:
+#
+# https://github.com/elastic/elasticsearch-ruby/blob/master/elasticsearch-api/lib/elasticsearch/api/actions/bulk.rb
 transformation ->(user) do
   {
     index: {
@@ -34,10 +39,13 @@ transformation ->(user) do
   }
 end
 
-# Buffer
+# It is not efficient to call elasticsearch for every single record. Therefore we
+# use a tranformation with a buffer, to create bulks of records. For this demo we use a
+# buffer size of 10. In production environments and depending on your data, larger buffers
+# may be useful.
 transformation ->(users) do
   users
 end, buffer_size: 10
 
-# Write user into elasticsearch
+# Write users into elasticsearch
 destination Metacrunch::Elasticsearch::Destination.new(elasticsearch)
