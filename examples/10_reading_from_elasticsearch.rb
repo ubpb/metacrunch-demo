@@ -12,7 +12,6 @@ source Metacrunch::Elasticsearch::Source.new(
   search_options: {
     index: "metacrunch-elasticsearch-demo",
     type: "users",
-    size: 2,
     body: {
       query: {
         wildcard: {
