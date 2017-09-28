@@ -8,7 +8,18 @@ options do
   add :database_url, "-d", "--database URL", "Database connection URL", default: "sqlite://#{::File.expand_path(__dir__)}/../assets/dummy.sqlite"
 end
 
-# For this example the destination database is an in-memory database.
+# Create a database connection object with Sequel (Sequel is a dependency of the metacrunch-db package)
+# We connect to a sqlite3 database here. You can connect to any SQL database that is supported
+# by Sequel (https://github.com/jeremyevans/sequel).
+SOURCE_DB = Sequel.connect("sqlite://#{::File.expand_path(__dir__)}/../assets/dummy.sqlite")
+
+# Now create the dataset we like to use. The provided dummy.sqlite database has one table (users)
+# with one column (name) and holds 100 dummy user records. To use the source, it is required to
+# use a dataset with an unambiguous order.
+users = SOURCE_DB[:users].order(:id)
+
+# For this example the destination database is an in-memory sqlite3 database but could be
+# any database hat is supported by Sequel (https://github.com/jeremyevans/sequel).
 DEST_DB = Sequel.sqlite
 
 # Make sure the destination database table exists
@@ -16,14 +27,6 @@ DEST_DB.create_table(:users_with_a) do
   primary_key :id
   String :name
 end
-
-# Now create a database connection object with Sequel (Sequel is a dependency of the metacrunch-db package)
-SOURCE_DB = Sequel.connect(options[:database_url])
-
-# Now create the dataset we like to use. The provided dummy.sqlite database has one table (users)
-# with one column (name) and holds 100 dummy user records. To use the source, it is required to
-# use a dataset with an unambiguous order.
-users = SOURCE_DB[:users].order(:id)
 
 # To read from a database create the build in database source with a Sequel dataset.
 source Metacrunch::DB::Source.new(users)

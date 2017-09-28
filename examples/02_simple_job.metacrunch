@@ -1,26 +1,19 @@
 # Require dependencies from Gemfile
 Bundler.require
 
-# Include some helpers (dummy utils) to play with
-require "metacrunch/test_utils"
-
-# The DummySource emits hash objects of the following form: {number: x}
-# x counts from 1 to 10 by default.
-source Metacrunch::TestUtils::DummySource.new
+# Every object that responds to `#each` (Enumerable) is a valid source.
+# In this case we create a Range object from 1 to 10.
+source 1..10
 
 # In this example, the following transformation step is called 10 times.
-# `data` contains the object that has been yield by the source.
-transformation ->(data) do
-  # data: {number: x}
-  puts "transformation 1 called: #{data}"
+transformation ->(number) do
+  puts "transformation 1 called: #{number}"
 
   # Only return data objects where the number is odd
-  data[:number].odd? ? data : nil
+  number.odd? ? number : nil
 end
 
-# This transformation is only called with the return value from the previous
-# transformation.
-transformation ->(odd_data) do
-  # data: {number: x} where x is odd.
-  puts "transformation 2 called: #{odd_data}"
+# This transformation is only called with the odd numbers
+transformation ->(odd_number) do
+  puts "transformation 2 called: #{odd_number}"
 end

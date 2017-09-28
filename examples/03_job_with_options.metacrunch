@@ -1,9 +1,6 @@
 # Require dependencies from Gemfile
 Bundler.require
 
-# Include some helpers (dummy utils) to play with
-require "metacrunch/test_utils"
-
 # Let's define some options, we would like to use. You can
 # use the command line to set/override the values.
 #
@@ -21,9 +18,9 @@ options do
   # OptionParser look here: http://ruby-doc.org/stdlib/libdoc/optparse/rdoc/OptionParser.html
 
   # An option wth a default
-  add :count_until, "-c", "--count NUMBER", "Count until NUMBER", Integer, default: 15
+  add :count_until, "-c", "--count NUMBER", "Count until NUMBER", Integer, default: 10
   # A required option
-  add :required_option, "-f", "--foo STRING", "Set Foo", String, required: true
+  add :name, "-n", "--name STRING", "Set Name", String, required: true
   # A boolean (switch) option
   add :verbose, "-x", "Enable verbose mode"
 end
@@ -37,14 +34,11 @@ puts "Options: #{options}"
 # set `options(require_args: true) { ... }`
 puts "ARGV: #{ARGV}"
 
-# The DummySource emits hash objects of the following form: {number: x}
-# x counts from 1 to `options[:count_until]` by default.
-source Metacrunch::TestUtils::DummySource.new(count_until: options[:count_until])
+# Every object that responds to `#each` (Enumerable) is a valid source.
+# In this case we create a Range object from 1 to 10.
+source 1..options[:count_until]
 
-# In this example, the following transformation step is called `options[:count_until]` times.
-# row contains the object that has been read from the source.
-transformation ->(row) do
-  # row: {number: x}
-  puts "transformation 1 called: #{row}"
+transformation ->(number) do
+  puts "transformation called: #{number}"
 end
 
