@@ -107,7 +107,7 @@ $ bundle exec metacrunch 06_writing_to_database.metacrunch
 
 #### 07 // Writing to a Redis queue
 
-*To work with Redis use the [metacrunch-redis](https://github.com/ubpb/metacrunch-redis) package.*
+*To work with [Redis](https://redis.io) use the [metacrunch-redis](https://github.com/ubpb/metacrunch-redis) package.*
 
 This example shows how to use the `Metacrunch::Redis::QueueDestination` class to write data into a Redis queue. To run this example make sure you have a running Redis instance at `localhost:6379` (Redis default).
 
@@ -118,16 +118,42 @@ $ bundle exec metacrunch 07_writing_to_redis_queue.metacrunch
 
 #### 8 // Reading from a Redis queue
 
-TODO
+*To work with [Redis](https://redis.io) use the [metacrunch-redis](https://github.com/ubpb/metacrunch-redis) package.*
+
+This example shows how to use the `Metacrunch::Redis::QueueSource` class to read data from a Redis queue. To run this example make sure you have a running Redis instance at `localhost:6379` (Redis default).
+
+```
+$ bundle exec metacrunch 08_reading_from_redis_queue.metacrunch
+```
 
 #### 9 // Writing to elasticsearch
 
-TODO
+*To work with [Elasticsearch](https://www.elastic.co) use the [metacrunch-elasticsearch](https://github.com/ubpb/metacrunch-elasticsearch) package.*
+
+This example shows how to use the `Metacrunch::Elasticsearch::Destination` class to write data into Elasticsearch. To run this example make sure you have a running Elasticsearch instance at `localhost:9200` (Elasticsearch default).
+
+```
+$ bundle exec metacrunch 09_writing_to_elasticsearch.metacrunch
+```
 
 #### 10 // Reading from elasticsearch
 
-TODO
+*To work with [Elasticsearch](https://www.elastic.co) use the [metacrunch-elasticsearch](https://github.com/ubpb/metacrunch-elasticsearch) package.*
+
+This example shows how to use the `Metacrunch::Elasticsearch::Source` class to read data from Elasticsearch. To run this example make sure you have a running Elasticsearch instance at `localhost:9200` (Elasticsearch default).
+
+```
+$ bundle exec metacrunch 10_reading_from_elasticsearch.metacrunch
+```
 
 #### 11 // Working with MARCXML
 
-TODO
+*To work with [MARCXML](http://www.loc.gov/standards/marcxml/) data use the [metacrunch-marcxml](https://github.com/ubpb/metacrunch-marcxml) package.*
+
+Metacrunch is developed at the University Library of Paderborn, Germany. It's main use case is to process bibliographic metadata in MARCXML format. To allow easy access to the MARCXML specific fields and sub-fields, the `metacrunch-marcxml` package can be used.
+
+```
+$ bundle exec metacrunch 11_working_with_marcxml.metacrunch ../assets/marcxml/*.xml
+```
+
+
