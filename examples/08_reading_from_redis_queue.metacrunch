@@ -2,7 +2,7 @@
 Bundler.require
 
 # Set users list as source
-source Metacrunch::Redis::QueueSource.new("redis://localhost:6379/metacrunch-demo", "users", blocking: true)
+source Metacrunch::Redis::QueueSource.new("redis://localhost:6379/metacrunch-demo", "users")
 
 # We have stored the user as a serilized json object. So we need to parse
 # the object back.
