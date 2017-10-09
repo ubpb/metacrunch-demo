@@ -45,7 +45,7 @@ end
 # may be useful.
 transformation ->(users) do
   users
-end, buffer_size: 10
+end, buffer: 10
 
 # Write users into elasticsearch
 destination Metacrunch::Elasticsearch::Destination.new(elasticsearch)

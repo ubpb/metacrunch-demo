@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "metacrunch",               "~> 4.0"
+gem "metacrunch",               "~> 4.1"
 gem "metacrunch-file",          "~> 1.0"
 gem "metacrunch-db",            "~> 1.0"
 gem "metacrunch-redis",         "~> 1.1"
