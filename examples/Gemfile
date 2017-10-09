@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gem "metacrunch",               "~> 4.0"
 gem "metacrunch-file",          "~> 1.0"
 gem "metacrunch-db",            "~> 1.0"
-gem "metacrunch-redis",         "~> 1.0"
+gem "metacrunch-redis",         "~> 1.1"
 gem "metacrunch-elasticsearch", "~> 4.0"
 gem "metacrunch-marcxml",       "~> 2.0"
 
