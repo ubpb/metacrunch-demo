@@ -12,7 +12,7 @@ end
 
 # Create an Elasticsearch client instance. Make sure you have a
 # elasticsearch running at localhost:9200
-elasticsearch = ::Elasticsearch::Client.new(log: true)
+elasticsearch = Elasticsearch::Client.new(log: true)
 
 # For a clean start delete the 'metacrunch-elasticsearch-demo' index
 if elasticsearch.indices.exists?(index: "metacrunch-elasticsearch-demo")

@@ -10,7 +10,7 @@ users = 100.times.map do |i|
 end
 
 # Connect to redis
-redis = ::Redis.new(url: "redis://localhost:6379/metacrunch-demo")
+redis = Redis.new(url: "redis://localhost:6379/metacrunch-demo")
 # For a clean start delete the 'users' list
 redis.del("users")
 

@@ -2,7 +2,7 @@
 Bundler.require
 
 # Connect to redis
-redis = ::Redis.new(url: "redis://localhost:6379/metacrunch-demo")
+redis = Redis.new(url: "redis://localhost:6379/metacrunch-demo")
 
 # Set users list as source
 source Metacrunch::Redis::QueueSource.new(redis, "users")
