@@ -15,7 +15,7 @@ end
 #
 # The file reader can process regular files (*), gzip compressed files (*.gz),
 # archives (*.tar) and gzip compressed archives (*.tar.gz, *.tgz).
-source Metacrunch::File::Source.new(ARGV)
+source Metacrunch::File::FileSource.new(ARGV)
 
 # The file reader emits a `Metacrunch::File::Entry` for each regular file or
 # for each file that is contained in an archive.
